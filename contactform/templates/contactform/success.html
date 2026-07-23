@@ -1,0 +1,24 @@
+{% extends 'theme_config/base.html' %}
+{% load static %}
+
+{% block title %}Thank You | Base Features{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'contactform/css/contactform.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-card-container" style="text-align: center;">
+  <div class="success-illustration">✉️</div>
+  <div class="contact-header">
+    <h1>Thank You!</h1>
+    <p class="subtitle">Your message has been successfully sent.</p>
+  </div>
+  <p style="color: var(--color-subtext); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.5;">
+    We appreciate you reaching out to us. Our team will review your submission and respond as soon as possible.
+  </p>
+  <a href="{% if user.is_authenticated %}{% url 'login:dashboard' %}{% else %}{% url 'contactform:contact' %}{% endif %}" class="btn btn-primary">
+    Back to Contact Form
+  </a>
+</div>
+{% endblock %}

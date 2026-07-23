@@ -1,12 +1,18 @@
 {% load static %}
-<!-- NavFooter Component: Navigation Bar -->
+<!-- NavFooter Component: Navbar -->
 <nav class="navbar" id="main-navbar">
+
+  <!-- Navbar identity label -->
+  <span class="component-label component-label--navbar">Navbar</span>
+
   <a href="{% if user.is_authenticated %}{% url 'login:dashboard' %}{% else %}{% url 'login:login' %}{% endif %}" class="navbar-brand">
     <span class="brand-badge">{{ brand_short|default:"BF" }}</span>
     <span class="brand-text">{{ brand_name|default:"Base Features" }}</span>
   </a>
 
   <ul class="nav-links">
+    <li><a href="{% url 'contactform:contact' %}" class="nav-link">Contact</a></li>
+    <li><a href="{% url 'paymentGatewaySystem:dashboard-ui' %}" class="nav-link">Payments</a></li>
     {% if user.is_authenticated %}
       <li>
         <a href="{% url 'login:dashboard' %}" class="nav-link">
@@ -30,5 +36,46 @@
       <li><a href="{% url 'login:login' %}" class="nav-link">Sign In</a></li>
       <li><a href="{% url 'login:signup' %}" class="nav-link nav-link-highlight">Sign Up</a></li>
     {% endif %}
+
+    <!-- Dark / Light Theme Toggle Button -->
+    <li>
+      <button
+        id="theme-toggle-btn"
+        class="nav-link theme-toggle-btn"
+        aria-label="Toggle dark/light theme"
+        title="Toggle dark/light theme"
+        onclick="toggleTheme()"
+      >
+        <span id="theme-icon">🌙</span>
+      </button>
+    </li>
   </ul>
 </nav>
+
+<script>
+  (function () {
+    /* Restore persisted theme preference immediately on load (no FOUC) */
+    const saved = localStorage.getItem('bf-theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = '☀️';
+    }
+  })();
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    const isDark = html.getAttribute('data-theme') === 'dark';
+
+    if (isDark) {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('bf-theme', 'light');
+      if (icon) icon.textContent = '🌙';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('bf-theme', 'dark');
+      if (icon) icon.textContent = '☀️';
+    }
+  }
+</script>

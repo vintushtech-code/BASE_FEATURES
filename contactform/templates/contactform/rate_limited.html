@@ -1,0 +1,22 @@
+{% extends 'theme_config/base.html' %}
+{% load static %}
+
+{% block title %}Rate Limit Exceeded | Base Features{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'contactform/css/contactform.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-card-container" style="text-align: center;">
+  <div style="font-size: 3.5rem; margin-bottom: 1.5rem;">🛡️</div>
+  <div class="contact-header">
+    <h1 style="color: var(--color-error);">Security Throttling Active</h1>
+    <p class="subtitle">Too many contact submissions detected from your IP address.</p>
+  </div>
+  <p style="color: var(--color-subtext); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.5;">
+    {{ error_message }}
+  </p>
+  <a href="{% url 'contactform:contact' %}" class="btn btn-primary">Refresh Contact Page</a>
+</div>
+{% endblock %}

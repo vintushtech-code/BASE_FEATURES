@@ -1,0 +1,67 @@
+{% extends 'theme_config/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | Base Features{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'contactform/css/contactform.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-card-container">
+  <div class="contact-header">
+    <h1>Contact Us</h1>
+    <p class="subtitle">Have questions or feedback? Drop us a message below.</p>
+  </div>
+
+  {% if form.non_field_errors %}
+    <div class="alert alert-error">
+      {% for error in form.non_field_errors %}
+        <div>{{ error }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="post" action="{% url 'contactform:contact' %}" novalidate>
+    {% csrf_token %}
+
+    <!-- Security and anti-spam fields -->
+    {{ form.website }}
+    {{ form.submission_security }}
+
+    <div class="form-group">
+      <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+      {{ form.name }}
+      {% if form.name.errors %}
+        <div class="field-error">{{ form.name.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.email.id_for_label }}" class="form-label">Email Address</label>
+      {{ form.email }}
+      {% if form.email.errors %}
+        <div class="field-error">{{ form.email.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.subject.id_for_label }}" class="form-label">Subject</label>
+      {{ form.subject }}
+      {% if form.subject.errors %}
+        <div class="field-error">{{ form.subject.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.message.id_for_label }}" class="form-label">Message</label>
+      {{ form.message }}
+      {% if form.message.errors %}
+        <div class="field-error">{{ form.message.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Send Message</button>
+  </form>
+</div>
+{% endblock %}

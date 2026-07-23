@@ -29,5 +29,6 @@ urlpatterns = [
     path('', root_redirect, name='root'),
     path('auth/', include('login.urls', namespace='login')),
     path('api/payments/', include('paymentGatewaySystem.urls', namespace='paymentGatewaySystem')),
+    path('contact/', include('contactform.urls', namespace='contactform')),
 ]
 

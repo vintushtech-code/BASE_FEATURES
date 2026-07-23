@@ -50,7 +50,7 @@
 .form-input:focus {
   border-color: var(--color-primary);
   background-color: var(--color-secondary);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .form-input::placeholder {
@@ -235,7 +235,7 @@
   font-size: 1.75rem;
   font-weight: 700;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px var(--color-avatar-shadow);
 }
 
 .avatar-circle img {

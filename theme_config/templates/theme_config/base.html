@@ -1,11 +1,19 @@
 {% load static navfooter_tags %}
 <!DOCTYPE html>
-<html lang="en" style="{{ THEME_CSS_VARIABLES|safe }}">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Base Features - Modular, Secure Django Components Library">
   <title>{% block title %}Base Features{% endblock %}</title>
+
+  <script>
+    (function() {
+      const style = document.createElement('style');
+      style.textContent = "{{ THEME_CSS_VARIABLES|escapejs }}";
+      document.head.appendChild(style);
+    })();
+  </script>
 
   <!-- Master Vanilla CSS Stylesheet -->
   <link rel="stylesheet" href="{% static 'theme_config/css/theme.css' %}">

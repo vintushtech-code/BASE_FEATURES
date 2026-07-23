@@ -37,6 +37,7 @@ from .forms import (
     CustomSetPasswordForm
 )
 from .security import rate_limit, sanitize_input
+from .tokens import password_reset_token_generator
 
 User = get_user_model()
 
@@ -134,12 +135,15 @@ class LogoutView(View):
 class CustomPasswordResetView(PasswordResetView):
     """
     Initiates password reset process by emailing a secure token link.
+    Uses the custom token generator (excludes last_login from hash) so
+    reset links don't expire prematurely if the user has logged in.
     """
     template_name = 'login/password_reset.html'
     form_class = CustomPasswordResetForm
     email_template_name = 'login/password_reset_email.html'
     subject_template_name = 'login/password_reset_subject.txt'
     success_url = reverse_lazy('login:password_reset_done')
+    token_generator = password_reset_token_generator
 
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):
@@ -147,9 +151,14 @@ class CustomPasswordResetDoneView(PasswordResetDoneView):
 
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    """
+    Validates the reset token and presents the new password form.
+    Uses the same custom token generator to ensure consistent validation.
+    """
     template_name = 'login/password_reset_confirm.html'
     form_class = CustomSetPasswordForm
     success_url = reverse_lazy('login:password_reset_complete')
+    token_generator = password_reset_token_generator
 
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):

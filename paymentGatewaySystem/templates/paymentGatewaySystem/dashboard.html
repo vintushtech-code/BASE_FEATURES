@@ -1,3 +1,4 @@
+{% load static navfooter_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,26 +11,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+      (function() {
+        const style = document.createElement('style');
+        style.textContent = "{{ THEME_CSS_VARIABLES|escapejs }}";
+        document.head.appendChild(style);
+      })();
+    </script>
     
     <style>
         :root {
-            --bg-primary: #0b0f19;
-            --bg-secondary: #111827;
-            --bg-card: #1f293d;
-            --bg-glass: rgba(31, 41, 61, 0.7);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(99, 102, 241, 0.4);
+            --bg-primary: var(--color-bg, #0b0f19);
+            --bg-secondary: var(--color-secondary, #111827);
+            --bg-card: var(--color-secondary, #1f293d);
+            --bg-glass: var(--color-secondary, rgba(31, 41, 61, 0.7));
+            --border-color: var(--color-border, rgba(255, 255, 255, 0.08));
+            --border-hover: var(--color-primary, rgba(99, 102, 241, 0.4));
             
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --text-dim: #6b7280;
+            --text-main: var(--color-primary, #f3f4f6);
+            --text-muted: var(--color-subtext, #9ca3af);
+            --text-dim: var(--color-subtext, #6b7280);
             
-            --accent-primary: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.35);
-            --accent-success: #10b981;
-            --accent-warning: #f59e0b;
-            --accent-danger: #ef4444;
-            --accent-info: #06b6d4;
+            --accent-primary: var(--color-primary, #6366f1);
+            --accent-glow: var(--color-focus-ring, rgba(99, 102, 241, 0.35));
+            --accent-success: var(--color-success, #10b981);
+            --accent-warning: var(--color-info, #f59e0b);
+            --accent-danger: var(--color-error, #ef4444);
+            --accent-info: var(--color-info, #06b6d4);
             
             --font-heading: 'Outfit', sans-serif;
             --font-body: 'Inter', sans-serif;
@@ -54,7 +62,7 @@
 
         /* Top Navigation Header */
         header.app-header {
-            background: rgba(17, 24, 39, 0.85);
+            background: var(--color-secondary, rgba(17, 24, 39, 0.85));
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-color);
             padding: 1rem 2rem;
@@ -281,7 +289,7 @@
         }
 
         .form-input, .form-select {
-            background: rgba(15, 23, 42, 0.6);
+            background: var(--color-input-bg, rgba(15, 23, 42, 0.6));
             border: 1px solid var(--border-color);
             border-radius: 0.6rem;
             padding: 0.75rem 1rem;
@@ -299,7 +307,7 @@
 
         .btn {
             background: var(--accent-primary);
-            color: #fff;
+            color: var(--color-secondary, #fff);
             border: none;
             border-radius: 0.6rem;
             padding: 0.8rem 1.5rem;
@@ -321,7 +329,7 @@
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--color-secondary, rgba(255, 255, 255, 0.05));
             border: 1px solid var(--border-color);
             color: var(--text-main);
             box-shadow: none;
@@ -563,9 +571,37 @@
             overflow-y: auto;
             white-space: pre-wrap;
         }
+
+        /* Navbar theme overrides for the dark payment console page */
+        #main-navbar.navbar {
+            background-color: var(--bg-secondary) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+        }
+        #main-navbar .navbar-brand {
+            color: var(--text-main) !important;
+        }
+        #main-navbar .brand-badge {
+            background: var(--accent-primary) !important;
+            color: #fff !important;
+        }
+        #main-navbar .nav-link {
+            color: var(--text-muted) !important;
+        }
+        #main-navbar .nav-link:hover {
+            color: var(--text-main) !important;
+        }
+        #main-navbar .theme-toggle-btn {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
+        }
     </style>
+    <link rel="stylesheet" href="{% static 'navfooter/css/navfooter.css' %}">
 </head>
 <body>
+
+    <!-- Unified Navigation Bar -->
+    {% render_navbar %}
 
     <!-- Header -->
     <header class="app-header">
@@ -935,7 +971,8 @@
             currentScenario = scenarioKey;
         }
 
-        const MERCHANT_API_KEY = 'key_admin_merchant_9999';
+        const MERCHANT_API_KEY = '{{ merchant_api_key|default:"key_admin_merchant_9999" }}';
+        const CSRF_TOKEN = "{{ csrf_token }}";
 
         async function tokenizeCard() {
             const cardNum = document.getElementById('card_number').value;
@@ -948,7 +985,8 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Merchant-Api-Key': MERCHANT_API_KEY
+                        'X-Merchant-Api-Key': MERCHANT_API_KEY,
+                        'X-CSRFToken': CSRF_TOKEN
                     },
                     body: JSON.stringify({
                         card_number: cardNum,
@@ -994,7 +1032,8 @@
                     headers: {
                         'Content-Type': 'application/json',
                         'Idempotency-Key': idempKey,
-                        'X-Merchant-Api-Key': MERCHANT_API_KEY
+                        'X-Merchant-Api-Key': MERCHANT_API_KEY,
+                        'X-CSRFToken': CSRF_TOKEN
                     },
                     body: JSON.stringify(payload)
                 });
@@ -1058,7 +1097,10 @@
                 // Update reconciliation stats
                 const recRes = await fetch('/api/payments/reconcile/', {
                     method: 'POST',
-                    headers: { 'X-Merchant-Api-Key': MERCHANT_API_KEY }
+                    headers: {
+                        'X-Merchant-Api-Key': MERCHANT_API_KEY,
+                        'X-CSRFToken': CSRF_TOKEN
+                    }
                 });
                 const recData = await recRes.json();
 
@@ -1078,7 +1120,8 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Merchant-Api-Key': MERCHANT_API_KEY
+                        'X-Merchant-Api-Key': MERCHANT_API_KEY,
+                        'X-CSRFToken': CSRF_TOKEN
                     },
                     body: JSON.stringify({ transaction_id: transactionId, reason: "Refund issued via Dashboard Ledger UI" })
                 });
@@ -1110,7 +1153,10 @@
 
             const response = await fetch('/api/payments/reconcile/', {
                 method: 'POST',
-                headers: { 'X-Merchant-Api-Key': MERCHANT_API_KEY }
+                headers: {
+                    'X-Merchant-Api-Key': MERCHANT_API_KEY,
+                    'X-CSRFToken': CSRF_TOKEN
+                }
             });
             const data = await response.json();
             consoleBox.innerText = `[Reconciliation Engine Summary]\n` + JSON.stringify(data, null, 2);
@@ -1122,7 +1168,10 @@
 
             const response = await fetch('/api/payments/poll-pending/', {
                 method: 'POST',
-                headers: { 'X-Merchant-Api-Key': MERCHANT_API_KEY }
+                headers: {
+                    'X-Merchant-Api-Key': MERCHANT_API_KEY,
+                    'X-CSRFToken': CSRF_TOKEN
+                }
             });
             const data = await response.json();
             consoleBox.innerText = `[Pending Poller Summary]\n` + JSON.stringify(data, null, 2);

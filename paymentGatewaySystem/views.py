@@ -445,6 +445,12 @@ class DashboardView(views.APIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request):
-        return render(request, 'paymentGatewaySystem/dashboard.html')
+        merchant_api_key = 'key_admin_merchant_9999'
+        if request.user.is_authenticated:
+            merchant = _get_or_create_merchant(request.user)
+            merchant_api_key = merchant.api_key
+        return render(request, 'paymentGatewaySystem/dashboard.html', {
+            'merchant_api_key': merchant_api_key
+        })
 
 

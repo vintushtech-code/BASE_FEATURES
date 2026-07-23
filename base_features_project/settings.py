@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'navfooter.apps.NavfooterConfig',
     'login.apps.LoginConfig',
     'paymentGatewaySystem.apps.PaymentGatewaySystemConfig',
+    'contactform.apps.ContactformConfig',
 ]
 
 # Razorpay Test Mode Credentials & Encryption Settings
@@ -160,9 +161,27 @@ LOGOUT_REDIRECT_URL = 'login:login'
 # Email Backend Configuration for Password Reset (Console in Dev)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Password Reset Token Expiry
+# ------------------------------------------------------------
+# How long (in seconds) a password reset link remains valid.
+# Default Django value: 259200 (3 days).
+# Set explicitly here for transparency and easy tuning.
+# Note: Our custom token generator in login/tokens.py ensures the
+# token is NOT invalidated by user logins between request & click.
+PASSWORD_RESET_TIMEOUT = 259200  # 3 days = 72 hours
+
+
 # Hardened Security & Cookie Directives
 X_FRAME_OPTIONS = 'DENY'
 SECURE_BROWSER_XSS_FILTER = True
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
+
+
+# Reusable Contact Form Settings
+CONTACT_FORM_EMAIL_RECIPIENT = 'admin@example.com'
+CONTACT_FORM_RATE_LIMIT_LIMIT = 5
+CONTACT_FORM_RATE_LIMIT_PERIOD = 3600  # 1 hour
+CONTACT_FORM_MIN_SUBMIT_TIME = 3       # 3 seconds
+
 

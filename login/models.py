@@ -84,3 +84,14 @@ class CustomUser(AbstractUser):
         if len(parts) >= 2:
             return f"{parts[0][0]}{parts[1][0]}".upper()
         return name[:2].upper() if name else "U"
+
+
+class SuperUser(CustomUser):
+    """
+    Proxy model for CustomUser to represent and manage Superusers separately in the Django Admin.
+    """
+    class Meta:
+        proxy = True
+        verbose_name = _('Super User')
+        verbose_name_plural = _('Super Users')
+

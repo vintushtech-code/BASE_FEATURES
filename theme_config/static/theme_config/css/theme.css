@@ -2,10 +2,11 @@
   Base Features - Centralized Master Stylesheet (Vanilla CSS)
   Zero external CSS framework dependency (No Bootstrap, No Tailwind).
   Leverages CSS custom properties injected from theme_config/colors.py.
+  Supports Light Mode (default) and Dark Mode via [data-theme='dark'] on <html>.
 */
 
 :root {
-  /* Fallbacks in case context processor is not loaded */
+  /* === LIGHT THEME (Default) === */
   --color-primary: #111111;
   --color-secondary: #ffffff;
   --color-bg: #fff0f5;
@@ -15,8 +16,15 @@
   --color-input-bg: #fafafa;
   --color-success: #155724;
   --color-success-bg: #d4edda;
+  --color-success-border: rgba(21, 87, 36, 0.25);
   --color-error: #721c24;
   --color-error-bg: #f8d7da;
+  --color-error-border: rgba(114, 28, 36, 0.25);
+  --color-info: #274e13;
+  --color-info-bg: #e2f0d9;
+  --color-info-border: rgba(39, 78, 19, 0.2);
+  --color-focus-ring: rgba(17, 17, 17, 0.1);
+  --color-avatar-shadow: rgba(0, 0, 0, 0.12);
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   --radius-lg: 16px;
   --radius-md: 10px;
@@ -26,11 +34,37 @@
   --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* === DARK THEME OVERRIDES === */
+[data-theme="dark"] {
+  --color-primary: #f1f1f1;
+  --color-secondary: #1e1e2e;
+  --color-bg: #12121c;
+  --color-subtext: #a0a0b8;
+  --color-border: #2e2e45;
+  --color-primary-hover: #dcdcf0;
+  --color-input-bg: #252537;
+  --color-success: #75d69c;
+  --color-success-bg: #1a3a2a;
+  --color-success-border: rgba(117, 214, 156, 0.25);
+  --color-error: #f28b82;
+  --color-error-bg: #3a1a1a;
+  --color-error-border: rgba(242, 139, 130, 0.25);
+  --color-info: #9ed89b;
+  --color-info-bg: #1a2e1a;
+  --color-info-border: rgba(158, 216, 155, 0.2);
+  --color-focus-ring: rgba(241, 241, 241, 0.12);
+  --color-avatar-shadow: rgba(0, 0, 0, 0.4);
+  --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Smooth color transitions when toggling theme */
 /* Global Reset & Base Setup */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 html, body {
@@ -132,18 +166,19 @@ body {
 .alert-success {
   background-color: var(--color-success-bg);
   color: var(--color-success);
-  border: 1px solid rgba(21, 87, 36, 0.15);
+  border: 1px solid var(--color-success-border);
 }
 
 .alert-error, .alert-danger {
   background-color: var(--color-error-bg);
   color: var(--color-error);
-  border: 1px solid rgba(114, 28, 36, 0.15);
+  border: 1px solid var(--color-error-border);
 }
 
 .alert-info {
-  background-color: #E2F0D9;
-  color: #274E13;
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+  border: 1px solid var(--color-info-border);
 }
 
 /* Generic Reusable Card Container */
