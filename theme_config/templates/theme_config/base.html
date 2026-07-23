@@ -1,4 +1,4 @@
-{% load static %}
+{% load static navfooter_tags %}
 <!DOCTYPE html>
 <html lang="en" style="{{ THEME_CSS_VARIABLES|safe }}">
 <head>
@@ -9,30 +9,13 @@
 
   <!-- Master Vanilla CSS Stylesheet -->
   <link rel="stylesheet" href="{% static 'theme_config/css/theme.css' %}">
+  <link rel="stylesheet" href="{% static 'navfooter/css/navfooter.css' %}">
   {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar" id="main-navbar">
-    <a href="{% url 'login:dashboard' %}" class="navbar-brand">
-      <span>BF</span> Base Features
-    </a>
-    <ul class="nav-links">
-      {% if user.is_authenticated %}
-        <li><a href="{% url 'login:dashboard' %}" class="nav-link">Dashboard</a></li>
-        <li>
-          <form action="{% url 'login:logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="nav-link" style="background:none; border:none; cursor:pointer; font:inherit;">Logout</button>
-          </form>
-        </li>
-      {% else %}
-        <li><a href="{% url 'login:login' %}" class="nav-link">Sign In</a></li>
-        <li><a href="{% url 'login:signup' %}" class="nav-link" style="font-weight:700; color:var(--color-primary);">Sign Up</a></li>
-      {% endif %}
-    </ul>
-  </nav>
+  <!-- Navigation Bar Component -->
+  {% render_navbar %}
 
   <!-- Application Main Section -->
   <main class="app-container">
@@ -50,10 +33,8 @@
     {% endblock %}
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; {% now "Y" %} Base Features Project. Modular &amp; Secure Authentication Library.</p>
-  </footer>
+  <!-- Footer Component -->
+  {% render_footer %}
 
   {% block extra_js %}{% endblock %}
 </body>

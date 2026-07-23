@@ -1,0 +1,145 @@
+/*
+  NavFooter Component Stylesheet (Vanilla CSS)
+  Consumes CSS custom variables injected by theme_config.
+*/
+
+.navbar {
+  background-color: var(--color-secondary, #ffffff);
+  border-bottom: 1px solid var(--color-border, #e5d6db);
+  padding: 0.9rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary, #111111);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  letter-spacing: -0.4px;
+}
+
+.brand-badge {
+  background: var(--color-primary, #111111);
+  color: var(--color-secondary, #ffffff);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+}
+
+.nav-link {
+  color: var(--color-subtext, #4a4a4a);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-primary, #111111);
+}
+
+.nav-link-highlight {
+  font-weight: 700;
+  color: var(--color-primary, #111111);
+  background-color: var(--color-bg, #fff0f5);
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #e5d6db);
+}
+
+.nav-link-highlight:hover {
+  background-color: var(--color-primary, #111111);
+  color: var(--color-secondary, #ffffff);
+}
+
+.btn-link-logout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.user-avatar-small {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-primary, #111111);
+  color: var(--color-secondary, #ffffff);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Footer Styling */
+.footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  color: var(--color-subtext, #4a4a4a);
+  font-size: 0.88rem;
+  border-top: 1px solid var(--color-border, #e5d6db);
+  background-color: var(--color-secondary, #ffffff);
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-title {
+  font-weight: 700;
+  color: var(--color-primary, #111111);
+}
+
+.footer-tagline {
+  font-size: 0.82rem;
+  color: var(--color-subtext, #4a4a4a);
+}
+
+.footer-copy {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+  .nav-links {
+    gap: 0.75rem;
+  }
+}

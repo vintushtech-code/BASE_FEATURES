@@ -1,0 +1,34 @@
+{% load static %}
+<!-- NavFooter Component: Navigation Bar -->
+<nav class="navbar" id="main-navbar">
+  <a href="{% if user.is_authenticated %}{% url 'login:dashboard' %}{% else %}{% url 'login:login' %}{% endif %}" class="navbar-brand">
+    <span class="brand-badge">{{ brand_short|default:"BF" }}</span>
+    <span class="brand-text">{{ brand_name|default:"Base Features" }}</span>
+  </a>
+
+  <ul class="nav-links">
+    {% if user.is_authenticated %}
+      <li>
+        <a href="{% url 'login:dashboard' %}" class="nav-link">
+          <span class="user-avatar-small">
+            {% if user.avatar_url %}
+              <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="avatar-img" />
+            {% else %}
+              {{ user.get_initials }}
+            {% endif %}
+          </span>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <form action="{% url 'login:logout' %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="nav-link btn-link-logout">Logout</button>
+        </form>
+      </li>
+    {% else %}
+      <li><a href="{% url 'login:login' %}" class="nav-link">Sign In</a></li>
+      <li><a href="{% url 'login:signup' %}" class="nav-link nav-link-highlight">Sign Up</a></li>
+    {% endif %}
+  </ul>
+</nav>

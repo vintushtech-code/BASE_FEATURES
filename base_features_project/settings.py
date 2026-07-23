@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # Base Features Custom Reusable Apps
     'theme_config.apps.ThemeConfigConfig',
+    'navfooter.apps.NavfooterConfig',
     'login.apps.LoginConfig',
 ]
 

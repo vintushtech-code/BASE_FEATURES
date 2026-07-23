@@ -1,0 +1,3 @@
+"""
+NavFooter Template Tags Package
+"""
