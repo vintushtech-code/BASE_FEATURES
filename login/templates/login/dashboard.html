@@ -1,0 +1,79 @@
+{% extends 'theme_config/base.html' %}
+{% load static %}
+
+{% block title %}User Dashboard | Base Features{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'login/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  
+  <!-- Profile Summary Header Card -->
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="avatar-circle">
+        {% if user.avatar_url %}
+          <img src="{{ user.avatar_url }}" alt="{{ user.get_display_name }}">
+        {% else %}
+          {{ user.get_initials }}
+        {% endif %}
+      </div>
+
+      <div class="profile-title">
+        <h2>Welcome, {{ user.get_display_name }}!</h2>
+        <span class="provider-badge">
+          ⚡ Provider: {{ user.auth_provider|title }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Metadata Grid -->
+    <div class="info-grid">
+      <div class="info-box">
+        <div class="info-label">Username</div>
+        <div class="info-value">@{{ user.username }}</div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-label">Email Address</div>
+        <div class="info-value">{{ user.email }}</div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-label">Member Since</div>
+        <div class="info-value">{{ user.date_joined|date:"M d, Y" }}</div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-label">Security Status</div>
+        <div class="info-value" style="color: var(--color-success);">Protected &amp; Active</div>
+      </div>
+    </div>
+
+    <!-- Update Profile Form -->
+    <div style="border-top: 1px solid var(--color-border); padding-top: 1.5rem; margin-top: 1rem;">
+      <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem;">Profile Bio</h3>
+      
+      <form method="post" action="{% url 'login:dashboard' %}" class="auth-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <textarea name="bio" class="form-input" rows="3" placeholder="Tell us a little bit about yourself...">{{ user.bio }}</textarea>
+        </div>
+        <div style="display:flex; justify-content: flex-end; margin-top: 0.5rem;">
+          <button type="submit" class="btn btn-primary" style="width: auto; padding: 0.65rem 1.5rem;">Update Bio</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reusability Info Banner -->
+  <div class="card-container" style="max-width: 100%; border-left: 4px solid var(--color-primary);">
+    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">🚀 Standalone Module Ready</h3>
+    <p style="font-size: 0.9rem; color: var(--color-subtext);">
+      This authentication system (<code>login</code> app) and global color configuration (<code>theme_config</code> app) are completely modular and isolated. You can copy the <code>login</code> folder directly into any future Django codebase with zero external framework dependencies.
+    </p>
+  </div>
+</div>
+{% endblock %}

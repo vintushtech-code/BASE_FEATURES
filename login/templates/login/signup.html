@@ -1,0 +1,93 @@
+{% extends 'theme_config/base.html' %}
+{% load static %}
+
+{% block title %}Create Account | Base Features{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'login/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card-container">
+  <div class="auth-header">
+    <h1>Create Account</h1>
+    <p class="subtitle">Join Base Features in less than a minute</p>
+  </div>
+
+  {% if form.non_field_errors %}
+    <div class="alert alert-error">
+      {% for error in form.non_field_errors %}
+        <div>{{ error }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Signup Form -->
+  <form method="post" action="{% url 'login:signup' %}" class="auth-form" novalidate>
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+      {{ form.username }}
+      {% if form.username.errors %}
+        <div class="field-error">{{ form.username.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.email.id_for_label }}" class="form-label">Email Address</label>
+      {{ form.email }}
+      {% if form.email.errors %}
+        <div class="field-error">{{ form.email.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+      <div class="password-field-wrapper">
+        {{ form.password1 }}
+        <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('{{ form.password1.id_for_label }}', this)">
+          Show
+        </button>
+      </div>
+      {% if form.password1.errors %}
+        <div class="field-error">{{ form.password1.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+      <div class="password-field-wrapper">
+        {{ form.password2 }}
+        <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('{{ form.password2.id_for_label }}', this)">
+          Show
+        </button>
+      </div>
+      {% if form.password2.errors %}
+        <div class="field-error">{{ form.password2.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top:0.5rem;">Create Account</button>
+  </form>
+
+  <div class="auth-footer">
+    Already have an account? <a href="{% url 'login:login' %}">Sign In</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function togglePasswordVisibility(fieldId, btn) {
+    const input = document.getElementById(fieldId);
+    if (input.type === "password") {
+      input.type = "text";
+      btn.textContent = "Hide";
+    } else {
+      input.type = "password";
+      btn.textContent = "Show";
+    }
+  }
+</script>
+{% endblock %}

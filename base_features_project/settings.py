@@ -37,7 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Base Features Custom Reusable Apps
+    'theme_config.apps.ThemeConfigConfig',
+    'login.apps.LoginConfig',
 ]
+
+# Custom User Model Specification
+AUTH_USER_MODEL = 'login.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Central Theme Color Context Processor
+                'theme_config.context_processors.theme_colors',
             ],
         },
     },
@@ -89,6 +98,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -115,3 +127,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Authentication URLs Configuration
+LOGIN_URL = 'login:login'
+LOGIN_REDIRECT_URL = 'login:dashboard'
+LOGOUT_REDIRECT_URL = 'login:login'
+
+# Email Backend Configuration for Password Reset (Console in Dev)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Hardened Security & Cookie Directives
+X_FRAME_OPTIONS = 'DENY'
+SECURE_BROWSER_XSS_FILTER = True
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+

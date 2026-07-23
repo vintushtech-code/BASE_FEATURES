@@ -1,0 +1,26 @@
+{% extends 'theme_config/base.html' %}
+{% load static %}
+
+{% block title %}Rate Limit Exceeded | Base Features{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'login/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card-container" style="text-align: center;">
+  <div class="auth-header">
+    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🛡️</div>
+    <h1>Security Protection Active</h1>
+    <p class="subtitle" style="color: var(--color-error);">
+      Too many request attempts detected.
+    </p>
+  </div>
+
+  <p style="font-size: 0.95rem; color: var(--color-subtext); margin-bottom: 1.5rem;">
+    To protect user accounts against brute-force attacks, this endpoint is rate limited. Please wait a moment before trying again.
+  </p>
+
+  <a href="{% url 'login:login' %}" class="btn btn-primary">Return to Sign In</a>
+</div>
+{% endblock %}

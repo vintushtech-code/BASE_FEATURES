@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="{{ THEME_CSS_VARIABLES|safe }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Base Features - Modular, Secure Django Components Library">
+  <title>{% block title %}Base Features{% endblock %}</title>
+
+  <!-- Master Vanilla CSS Stylesheet -->
+  <link rel="stylesheet" href="{% static 'theme_config/css/theme.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="main-navbar">
+    <a href="{% url 'login:dashboard' %}" class="navbar-brand">
+      <span>BF</span> Base Features
+    </a>
+    <ul class="nav-links">
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'login:dashboard' %}" class="nav-link">Dashboard</a></li>
+        <li>
+          <form action="{% url 'login:logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-link" style="background:none; border:none; cursor:pointer; font:inherit;">Logout</button>
+          </form>
+        </li>
+      {% else %}
+        <li><a href="{% url 'login:login' %}" class="nav-link">Sign In</a></li>
+        <li><a href="{% url 'login:signup' %}" class="nav-link" style="font-weight:700; color:var(--color-primary);">Sign Up</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <!-- Application Main Section -->
+  <main class="app-container">
+    {% if messages %}
+      <div class="messages-wrapper">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags|default:'info' }}" role="alert">
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; {% now "Y" %} Base Features Project. Modular &amp; Secure Authentication Library.</p>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
