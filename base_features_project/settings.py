@@ -25,10 +25,8 @@ SECRET_KEY = 'django-insecure-yxye&y-=g0+_-bnqn^(3gf5zq(s9119$x$_=_*-%1e^%)*=@!&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', '*']
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,11 +36,33 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Third party apps
+    'rest_framework',
+
     # Base Features Custom Reusable Apps
     'theme_config.apps.ThemeConfigConfig',
     'navfooter.apps.NavfooterConfig',
     'login.apps.LoginConfig',
+    'paymentGatewaySystem.apps.PaymentGatewaySystemConfig',
 ]
+
+# Razorpay Test Mode Credentials & Encryption Settings
+import os
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID', 'rzp_test_mock_key_9999999999')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET', 'mock_razorpay_secret_key_123456789')
+RAZORPAY_WEBHOOK_SECRET = os.getenv('RAZORPAY_WEBHOOK_SECRET', 'whsec_mock_webhook_secret_9999')
+PAYMENT_ENCRYPTION_KEY = os.getenv('PAYMENT_ENCRYPTION_KEY', 'v9XkL5aP8zR3wQ2mN7yB4vC1xS0tG6hJ8kL2mP5qR9s=')
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
 
 # Custom User Model Specification
 AUTH_USER_MODEL = 'login.CustomUser'
