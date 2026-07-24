@@ -1,94 +1,262 @@
 /*
-  NavFooter Component Stylesheet (Vanilla CSS)
+  Modular Component CSS for Navbar & Footer
   Consumes CSS custom variables injected by theme_config.
 */
 
-.navbar {
-  background-color: var(--color-secondary, #ffffff);
-  border-bottom: 1px solid var(--color-border, #e5d6db);
-  padding: 0.9rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+/* =====================================================
+   Dental Skeuomorphic Navbar Styling
+   ===================================================== */
+
+/* Outer Wrapper: Centered, floating, with shadow */
+.dental-navbar-wrapper {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+  width: 100%;
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.navbar-brand {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-primary, #111111);
-  text-decoration: none;
+/* The floating dental tool / tooth shape container */
+.dental-navbar {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  letter-spacing: -0.4px;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1100px;
+  height: 90px;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f6f8 40%, #e9e9ee 100%);
+  border: 1px solid rgba(220, 220, 230, 0.8);
+  
+  /* Symmetrically rounded corners on both ends */
+  border-radius: 45px;
+  
+  /* Glossy highlights & 3D bevel shadows */
+  box-shadow:
+    inset 0 3px 5px rgba(255, 255, 255, 1),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.05),
+    0 12px 30px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+
+  padding: 0 24px 0 10px;
+  /* Balanced padding for rounded caps */
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
-.brand-badge {
-  background: var(--color-primary, #111111);
-  color: var(--color-secondary, #ffffff);
-  padding: 0.25rem 0.6rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 800;
-}
-
-.nav-links {
+/* Left Section: Rounded bulb logo */
+.dental-logo-box {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  list-style: none;
-}
-
-.nav-link {
-  color: var(--color-subtext, #4a4a4a);
+  justify-content: center;
+  z-index: 5;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.95rem;
-  display: inline-flex;
+}
+
+.dental-logo-bg {
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s ease;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #1b355a 0%, #11223b 100%);
+
+  /* Organic rounded-pebble look */
+  border-radius: 42% 58% 50% 50% / 45% 45% 55% 55%;
+
+  color: #ffffff;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 6px 12px rgba(17, 34, 59, 0.25);
+  transition: all 0.3s ease;
 }
 
-.nav-link:hover {
-  color: var(--color-primary, #111111);
+.dental-logo-box:hover .dental-logo-bg {
+  transform: scale(1.05) rotate(-3deg);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    0 8px 16px rgba(17, 34, 59, 0.35);
 }
 
-.nav-link-highlight {
+.tooth-logo-svg {
+  width: 32px;
+  height: 32px;
+}
+
+.dental-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 42% 58% 50% 50% / 45% 45% 55% 55%;
+}
+
+/* Center Section: Navigation Links */
+.dental-nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.2rem;
+  margin-left: 2rem;
+  flex: 1;
+}
+
+.dental-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: #555566;
+  position: relative;
+  padding: 0.5rem 0.2rem;
+  transition: all 0.25s ease;
+}
+
+.dental-nav-item .nav-icon {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 1.8px;
+  transition: transform 0.25s ease, stroke-width 0.25s ease;
+}
+
+.dental-nav-item .nav-label {
+  font-size: 0.68rem;
   font-weight: 700;
-  color: var(--color-primary, #111111);
-  background-color: var(--color-bg, #fff0f5);
-  padding: 0.4rem 0.9rem;
-  border-radius: 8px;
-  border: 1px solid var(--color-border, #e5d6db);
+  letter-spacing: 0.08em;
+  color: inherit;
+  transition: color 0.25s ease;
 }
 
-.nav-link-highlight:hover {
-  background-color: var(--color-primary, #111111);
-  color: var(--color-secondary, #ffffff);
+/* Hover and Active states matching image */
+.dental-nav-item:hover {
+  color: #0066cc;
 }
 
-.btn-link-logout {
-  background: none;
-  border: none;
+.dental-nav-item:hover .nav-icon {
+  transform: translateY(-2px);
+}
+
+/* Active Indicator */
+.dental-nav-item.active {
+  color: #0066cc;
+}
+
+.dental-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  width: 16px;
+  height: 2.5px;
+  background-color: #0066cc;
+  border-radius: 2px;
+  animation: slideIn 0.25s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+  }
+  to {
+    width: 16px;
+  }
+}
+
+/* Right Section: Blue dividing line and grid button */
+.dental-right-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-left: 1.5rem;
   cursor: pointer;
-  font: inherit;
+  z-index: 5;
+}
+
+/* The curved dividing line in blue */
+.dental-right-section::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: -9px;
+  /* Extends vertical range */
+  width: 40px;
+  height: 90px;
+  border-right: 2.5px solid #4a90e2;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.dental-grid-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #4a90e2;
+  transition: all 0.3s ease;
+}
+
+.dental-grid-btn:hover {
+  background-color: rgba(74, 144, 226, 0.08);
+  transform: scale(1.08);
+}
+
+.grid-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* Dropdown Menu Container styling */
+.user-dropdown-menu {
+  position: absolute;
+  top: 95px;
+  right: 10px;
+  width: 260px;
+  background-color: #ffffff;
+  border: 1px solid rgba(220, 220, 230, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.user-dropdown-menu.show {
+  display: flex;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.user-info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem 0.75rem 1.25rem;
 }
 
 .user-avatar-small {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: var(--color-primary, #111111);
   color: var(--color-secondary, #ffffff);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   overflow: hidden;
 }
@@ -99,115 +267,166 @@
   object-fit: cover;
 }
 
-/* Footer Styling */
-.footer {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  color: var(--color-subtext, #4a4a4a);
-  font-size: 0.88rem;
-  border-top: 1px solid var(--color-border, #e5d6db);
-  background-color: var(--color-secondary, #ffffff);
+.user-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.user-details .username {
+  font-weight: 700;
+  color: #111111;
+  font-size: 0.9rem;
+}
+
+.user-details .user-email {
+  font-size: 0.75rem;
+  color: #777788;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #eeeeff;
+  margin: 0.5rem 0;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1.25rem;
+  color: #444455;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f4f7fc;
+  color: #0066cc;
+}
+
+.dropdown-item.highlight {
+  color: #0066cc;
+  background-color: #f4f7fc;
+}
+
+.dropdown-item.highlight:hover {
+  background-color: #0066cc;
+  color: #ffffff;
+}
+
+.logout-form {
+  margin: 0;
+}
+
+.btn-logout {
+  color: #c0392b;
+}
+
+.btn-logout:hover {
+  background-color: #fdf2f2;
+  color: #e74c3c;
+}
+
+.btn-theme-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =====================================================
+   Dental Skeuomorphic Footer Styling
+   ===================================================== */
+
+/* Floating dental tool / footer shape container */
+.dental-footer-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 2.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
   margin-top: auto;
 }
 
-.footer-container {
+.dental-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   max-width: 1100px;
-  margin: 0 auto;
+  height: auto;
+  min-height: 90px;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f6f8 40%, #e9e9ee 100%);
+  border: 1px solid rgba(220, 220, 230, 0.8);
+  
+  /* Symmetrically rounded corners matching navbar */
+  border-radius: 45px;
+  
+  /* Glossy highlights & 3D bevel shadows */
+  box-shadow:
+    inset 0 3px 5px rgba(255, 255, 255, 1),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.05),
+    0 12px 30px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+
+  padding: 1.25rem 24px 1.25rem 10px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.dental-logo-bg--footer {
+  width: 64px;
+  height: 64px;
+}
+
+.dental-footer-center {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.footer-brand-info {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.footer-title {
+.footer-brand-title {
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--color-primary, #111111);
 }
 
-.footer-tagline {
-  font-size: 0.82rem;
-  color: var(--color-subtext, #4a4a4a);
+.footer-brand-separator {
+  color: var(--color-border, #e5d6db);
+  font-weight: 300;
 }
 
-.footer-copy {
-  margin-top: 0.5rem;
+.footer-brand-tagline {
   font-size: 0.8rem;
-  opacity: 0.8;
-}
-
-@media (max-width: 576px) {
-  .navbar {
-    padding: 0.75rem 1rem;
-  }
-  .nav-links {
-    gap: 0.75rem;
-  }
-}
-
-/* =====================================================
-   Component Identity Labels
-   Small pill labels identifying the component type.
-   Visible at the edge of navbar and footer.
-   ===================================================== */
-
-.component-label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.55rem;
-  border-radius: 20px;
-  opacity: 0.6;
-  pointer-events: none;
-  user-select: none;
-  border: 1px solid var(--color-border, #e5d6db);
   color: var(--color-subtext, #4a4a4a);
-  background-color: var(--color-bg, #fff0f5);
+  font-weight: 500;
 }
 
-.component-label--navbar {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -10px;
-  z-index: 101;
-}
-
-.component-label--footer {
-  display: block;
-  margin: 0 auto 0.5rem auto;
-  width: fit-content;
-}
-
-/* Position navbar relative so the label can overlap */
-.navbar {
-  position: sticky;
-}
-
-/* =====================================================
-   Dark / Light Theme Toggle Button
-   ===================================================== */
-
-.theme-toggle-btn {
-  background: var(--color-bg, #fff0f5);
-  border: 1px solid var(--color-border, #e5d6db);
-  border-radius: 20px;
-  padding: 0.35rem 0.75rem;
-  font-size: 1rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  line-height: 1;
-  color: var(--color-primary, #111111);
-  transition: all 0.25s ease;
-}
-
-.theme-toggle-btn:hover {
-  background: var(--color-primary, #111111);
-  color: var(--color-secondary, #ffffff);
-  border-color: var(--color-primary, #111111);
-  transform: scale(1.08);
+.footer-copy-text {
+  font-size: 0.75rem;
+  color: var(--color-subtext, #4a4a4a);
+  opacity: 0.8;
 }
 
 /* =====================================================
@@ -219,8 +438,7 @@
   justify-content: center;
   align-items: center;
   gap: 1.25rem;
-  margin: 1.25rem 0;
-  flex-wrap: wrap;
+  margin: 0.25rem 0;
 }
 
 .footer-social-icon {
@@ -230,27 +448,23 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  border: 1px solid var(--color-border, #e5d6db);
   background-color: var(--color-bg, #fff0f5);
+  border: 1px solid var(--color-border, #e5d6db);
   color: var(--color-subtext, #4a4a4a);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-social-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .footer-social-icon .social-icon {
   width: 18px;
   height: 18px;
-  fill: currentColor;
-  transition: fill 0.3s ease;
 }
 
-/* Hover transitions and brand-specific hover styling */
-.footer-social-icon:hover {
-  transform: translateY(-4px) scale(1.08);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-}
-
+/* Platform Brand Colors on Hover */
 .footer-social-icon--whatsapp:hover {
   background-color: #25D366;
   border-color: #25D366;
@@ -281,3 +495,207 @@
   color: var(--color-secondary, #ffffff);
 }
 
+/* =====================================================
+   Component Identity Labels
+   ===================================================== */
+
+.component-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+  border: 1px solid var(--color-border, #e5d6db);
+  color: var(--color-subtext, #4a4a4a);
+  background-color: var(--color-bg, #fff0f5);
+}
+
+.component-label--navbar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  z-index: 101;
+}
+
+.component-label--footer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -10px;
+  z-index: 101;
+}
+
+/* =====================================================
+   Responsive Adaptations & Media Queries
+   ===================================================== */
+
+@media (max-width: 992px) {
+  .dental-nav-links {
+    gap: 1.2rem;
+  }
+  .dental-navbar {
+    height: 80px;
+    padding: 0 35px 0 10px;
+  }
+  .dental-logo-bg {
+    width: 60px;
+    height: 60px;
+  }
+  .tooth-logo-svg {
+    width: 26px;
+    height: 26px;
+  }
+  .dental-nav-item .nav-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .dental-right-section::before {
+    height: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* On tablet/mobile, we hide some text labels, keeping the clean icons! */
+  .dental-nav-item .nav-label {
+    display: none;
+  }
+  .dental-nav-links {
+    gap: 1.5rem;
+  }
+  /* Footer Stack */
+  .dental-footer {
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    height: auto;
+    border-radius: 25px;
+    gap: 1.25rem;
+  }
+  .dental-footer-center {
+    gap: 0.75rem;
+  }
+  .footer-brand-info {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+  .footer-brand-separator {
+    display: none;
+  }
+  .dental-right-section {
+    padding-left: 0;
+    margin-top: 0.25rem;
+  }
+  .dental-right-section::before {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .dental-navbar-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .dental-nav-links {
+    gap: 0.75rem;
+  }
+  .dental-navbar {
+    padding: 0 25px 0 5px;
+  }
+}
+
+/* =====================================================
+   Dental Navbar & Footer Dark Theme Adaptation
+   ===================================================== */
+
+[data-theme='dark'] .dental-navbar-wrapper {
+  background-color: rgba(18, 18, 28, 0.05);
+}
+
+[data-theme='dark'] .dental-navbar {
+  background: linear-gradient(180deg, #1c1c28 0%, #161622 40%, #0f0f18 100%);
+  border-color: rgba(50, 50, 70, 0.8);
+  box-shadow:
+    inset 0 3px 5px rgba(255, 255, 255, 0.05),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.3),
+    0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .dental-nav-item {
+  color: #a0a0b8;
+}
+
+[data-theme='dark'] .dental-nav-item:hover,
+[data-theme='dark'] .dental-nav-item.active {
+  color: #4a90e2;
+}
+
+[data-theme='dark'] .dental-nav-item.active::after {
+  background-color: #4a90e2;
+}
+
+[data-theme='dark'] .user-dropdown-menu {
+  background-color: #1a1a26;
+  border-color: rgba(50, 50, 70, 0.8);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .user-details .username {
+  color: #f1f1f1;
+}
+
+[data-theme='dark'] .user-details .user-email {
+  color: #8a8a9a;
+}
+
+[data-theme='dark'] .dropdown-divider {
+  background-color: #2a2a3a;
+}
+
+[data-theme='dark'] .dropdown-item {
+  color: #a0a0b8;
+}
+
+[data-theme='dark'] .dropdown-item:hover {
+  background-color: #242436;
+  color: #4a90e2;
+}
+
+[data-theme='dark'] .dropdown-item.highlight {
+  background-color: #242436;
+  color: #4a90e2;
+}
+
+[data-theme='dark'] .dropdown-item.highlight:hover {
+  background-color: #4a90e2;
+  color: #ffffff;
+}
+
+[data-theme='dark'] .btn-logout:hover {
+  background-color: #3d1f1f;
+  color: #f28b82;
+}
+
+[data-theme='dark'] .dental-footer {
+  background: linear-gradient(180deg, #1c1c28 0%, #161622 40%, #0f0f18 100%);
+  border-color: rgba(50, 50, 70, 0.8);
+  box-shadow: 
+    inset 0 3px 5px rgba(255, 255, 255, 0.05),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.3),
+    0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .footer-brand-title {
+  color: #f1f1f1;
+}
+
+[data-theme='dark'] .footer-brand-tagline {
+  color: #8a8a9a;
+}
+
+[data-theme='dark'] .footer-copy-text {
+  color: #8a8a9a;
+}

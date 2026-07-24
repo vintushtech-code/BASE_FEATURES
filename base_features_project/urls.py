@@ -24,6 +24,9 @@ def root_redirect(request):
         return redirect('login:dashboard')
     return redirect('login:login')
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', root_redirect, name='root'),
@@ -31,4 +34,8 @@ urlpatterns = [
     path('api/payments/', include('paymentGatewaySystem.urls', namespace='paymentGatewaySystem')),
     path('contact/', include('contactform.urls', namespace='contactform')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

@@ -9,7 +9,7 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth import get_user_model
 from django.template import Context, Template
 from django.core.exceptions import ValidationError
-from navfooter.models import SocialMediaLink
+from navfooter.models import SocialMediaLink, NavbarSettings
 
 User = get_user_model()
 
@@ -25,6 +25,7 @@ class NavfooterTemplateTagsTestCase(TestCase):
         )
         # Clear any pre-populated data from migrations to have a clean slate in tests
         SocialMediaLink.objects.all().delete()
+        NavbarSettings.objects.all().delete()
 
     def test_navbar_tag_rendering(self):
         """Verify {% render_navbar %} inclusion tag executes cleanly."""
@@ -75,3 +76,15 @@ class NavfooterTemplateTagsTestCase(TestCase):
         with self.assertRaises(ValidationError):
             link.full_clean()
 
+    def test_navbar_renders_custom_logo(self):
+        """Verify that navbar renders custom logo image when configured."""
+        NavbarSettings.objects.create(logo_image_url="https://example.com/custom_logo.png")
+        request = self.factory.get('/')
+        request.user = self.user
+
+        out = Template(
+            "{% load navfooter_tags %}"
+            "{% render_navbar %}"
+        ).render(Context({'request': request}))
+
+        self.assertIn("https://example.com/custom_logo.png", out)

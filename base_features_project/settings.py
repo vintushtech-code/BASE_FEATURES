@@ -185,3 +185,9 @@ CONTACT_FORM_RATE_LIMIT_PERIOD = 3600  # 1 hour
 CONTACT_FORM_MIN_SUBMIT_TIME = 3       # 3 seconds
 
 
+# Media Files Configuration (for uploaded navbar logos)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SocialMediaLink
+from .models import SocialMediaLink, NavbarSettings
 
 @admin.register(SocialMediaLink)
 class SocialMediaLinkAdmin(admin.ModelAdmin):
@@ -23,3 +23,26 @@ class SocialMediaLinkAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         # Disable manual deletion of these standard platform slots to maintain dashboard stability
         return False
+
+
+@admin.register(NavbarSettings)
+class NavbarSettingsAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the NavbarSettings singleton.
+    Restricts model to exactly one configuration object.
+    """
+    list_display = ('__str__', 'logo_image_url', 'logo_image_file')
+
+    def has_add_permission(self, request):
+        # Allow adding a settings row only if none exists
+        try:
+            if NavbarSettings.objects.exists():
+                return False
+        except Exception:
+            pass
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        # Disable deletion of the configuration object
+        return False
+

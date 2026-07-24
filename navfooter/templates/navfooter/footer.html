@@ -1,53 +1,99 @@
 {% load static %}
-<!-- NavFooter Component: Footer -->
-<footer class="footer" id="main-footer">
+<!-- NavFooter Component: Dental Skeuomorphic Footer -->
+<div class="dental-footer-wrapper">
 
   <!-- Footer identity label -->
-  <span class="component-label component-label--footer">Footer</span>
+  <span class="component-label component-label--footer">Footer Redesign</span>
 
-  <div class="footer-container">
-    <div class="footer-brand">
-      <p class="footer-title">Base Features</p>
-      <p class="footer-tagline">{{ tagline|default:"Modular &amp; Secure Django Components Library" }}</p>
+  <footer class="dental-footer" id="main-footer">
+
+    <!-- Left Section: Logo Pebble (Mirrors Navbar Logo) -->
+    <div class="dental-logo-box">
+      <div class="dental-logo-bg dental-logo-bg--footer">
+        {% if navbar_settings.logo_image_file %}
+        <img src="{{ navbar_settings.logo_image_file.url }}" alt="{{ brand_name|default:'Logo' }}"
+          class="dental-logo-img" />
+        {% elif navbar_settings.logo_image_url %}
+        <img src="{{ navbar_settings.logo_image_url }}" alt="{{ brand_name|default:'Logo' }}" class="dental-logo-img" />
+        {% else %}
+        <svg class="tooth-logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M12 2C9.5 2 7 3.5 7 6.5C7 9.5 9 10 9 12C9 14.5 7.5 15.5 7.5 18C7.5 20.5 9.5 22 12 22C14.5 22 16.5 20.5 16.5 18C16.5 14.5 15 14.5 15 12C15 10 17 9.5 17 6.5C17 3.5 14.5 2 12 2Z" />
+          <path d="M9 12C10.5 12 12 11.5 12 10.5C12 11.5 13.5 12 15 12" />
+        </svg>
+        {% endif %}
+      </div>
     </div>
-    
-    {% if social_links %}
+
+    <!-- Center Section: Brand, Tagline, Social Links & Copyright -->
+    <div class="dental-footer-center">
+      <div class="footer-brand-info">
+        <span class="footer-brand-title">Base Features</span>
+        <span class="footer-brand-separator">|</span>
+        <span class="footer-brand-tagline">{{ tagline|default:"Modular &amp; Secure Django Components Library" }}</span>
+      </div>
+
+      {% if social_links %}
       <div class="footer-social-links">
         {% for link in social_links %}
-          <a href="{{ link.url }}" 
-             class="footer-social-icon footer-social-icon--{{ link.platform }}" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             title="{{ link.get_platform_display }}"
-             aria-label="{{ link.get_platform_display }}">
-            {% if link.platform == 'whatsapp' %}
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.012 2c-5.506 0-9.988 4.482-9.988 9.988 0 1.761.459 3.477 1.332 4.992L2.012 22l5.164-1.354c1.464.798 3.109 1.218 4.835 1.218 5.507 0 9.99-4.483 9.99-9.988C22.002 6.482 17.52 2 12.012 2zm5.556 14.153c-.228.643-1.127 1.185-1.554 1.25-.429.065-.968.106-2.909-.656-2.483-.976-4.081-3.504-4.205-3.668-.124-.164-.937-1.246-.937-2.378 0-1.132.585-1.687.792-1.912.208-.225.545-.337.845-.337.098 0 .19.005.27.01.245.012.368.028.528.412.164.394.562 1.37.61 1.472.049.102.08.22.012.355-.067.135-.1.222-.2.338-.1.116-.21.26-.3.348-.1.099-.204.207-.088.406.116.199.516.85 1.107 1.377.761.68 1.401.891 1.602.99.201.1.32.084.44-.055.12-.139.516-.602.656-.807.139-.205.28-.172.47-.1.191.072 1.21.57 1.417.672.208.102.348.153.399.243.05.09.05.52-.178 1.163z"/>
-              </svg>
-            {% elif link.platform == 'linkedin' %}
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-            {% elif link.platform == 'facebook' %}
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-            {% elif link.platform == 'instagram' %}
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-              </svg>
-            {% elif link.platform == 'github' %}
-              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-              </svg>
-            {% endif %}
-          </a>
+        <a href="{{ link.url }}" class="footer-social-icon footer-social-icon--{{ link.platform }}" target="_blank"
+          rel="noopener noreferrer" title="{{ link.get_platform_display }}" aria-label="{{ link.get_platform_display }}">
+          {% if link.platform == 'whatsapp' %}
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12.012 2c-5.506 0-9.988 4.482-9.988 9.988 0 1.761.459 3.477 1.332 4.992L2.012 22l5.164-1.354c1.464.798 3.109 1.218 4.835 1.218 5.507 0 9.99-4.483 9.99-9.988C22.002 6.482 17.52 2 12.012 2zm5.556 14.153c-.228.643-1.127 1.185-1.554 1.25-.429.065-.968.106-2.909-.656-2.483-.976-4.081-3.504-4.205-3.668-.124-.164-.937-1.246-.937-2.378 0-1.132.585-1.687.792-1.912.208-.225.545-.337.845-.337.098 0 .19.005.27.01.245.012.368.028.528.412.164.394.562 1.37.61 1.472.049.102.08.22.012.355-.067.135-.1.222-.2.338-.1.116-.21.26-.3.348-.1.099-.204.207-.088.406.116.199.516.85 1.107 1.377.761.68 1.401.891 1.602.99.201.1.32.084.44-.055.12-.139.516-.602.656-.807.139-.205.28-.172.47-.1.191.072 1.21.57 1.417.672.208.102.348.153.399.243.05.09.05.52-.178 1.163z" />
+          </svg>
+          {% elif link.platform == 'linkedin' %}
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg>
+          {% elif link.platform == 'facebook' %}
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+          {% elif link.platform == 'instagram' %}
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+          </svg>
+          {% elif link.platform == 'github' %}
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          {% endif %}
+        </a>
         {% endfor %}
       </div>
-    {% endif %}
+      {% endif %}
 
-    <div class="footer-copy">
-      <p>&copy; {% now "Y" %} Base Features Project. All rights reserved.</p>
+      <div class="footer-copy-text">
+        <p>&copy; {% now "Y" %} Base Features Project. All rights reserved.</p>
+      </div>
     </div>
-  </div>
-</footer>
+
+    <!-- Right Section: Blue dividing line and Scroll to Top button -->
+    <div class="dental-right-section" onclick="scrollToTop()" role="button" aria-label="Scroll to Top"
+      title="Scroll to Top">
+      <div class="dental-grid-btn">
+        <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </div>
+    </div>
+
+  </footer>
+</div>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+</script>

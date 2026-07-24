@@ -47,3 +47,31 @@ class SocialMediaLink(models.Model):
 
     def __str__(self):
         return f"{self.get_platform_display()} ({'Active' if self.is_active else 'Inactive'})"
+
+
+class NavbarSettings(models.Model):
+    """
+    Singleton model for central Navbar settings and configuration.
+    """
+    logo_image_url = models.URLField(
+        max_length=500, 
+        blank=True, 
+        default="", 
+        verbose_name="Logo External URL", 
+        help_text="Provide an external image URL to use as the navbar logo (e.g. https://example.com/logo.png)."
+    )
+    logo_image_file = models.ImageField(
+        upload_to='navbar_logos/', 
+        blank=True, 
+        null=True, 
+        verbose_name="Logo Local File", 
+        help_text="Upload a local image file to use as the navbar logo. If both file and URL are specified, the uploaded file takes precedence."
+    )
+
+    class Meta:
+        verbose_name = "Navbar Settings"
+        verbose_name_plural = "Navbar Settings"
+
+    def __str__(self):
+        return "Navbar Configuration Settings"
+

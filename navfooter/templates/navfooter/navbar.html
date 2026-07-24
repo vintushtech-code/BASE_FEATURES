@@ -1,24 +1,114 @@
 {% load static %}
-<!-- NavFooter Component: Navbar -->
-<nav class="navbar" id="main-navbar">
+<!-- NavFooter Component: Dental Skeuomorphic Navbar -->
+<div class="dental-navbar-wrapper">
 
   <!-- Navbar identity label -->
-  <span class="component-label component-label--navbar">Navbar</span>
+  <span class="component-label component-label--navbar">Navbar Redesign</span>
 
-  <a href="{% if user.is_authenticated %}{% url 'login:dashboard' %}{% else %}{% url 'login:login' %}{% endif %}"
-    class="navbar-brand">
-    <span class="brand-badge">{{ brand_short|default:"BF" }}</span>
-    <span class="brand-text">{{ brand_name|default:"Base Features" }}</span>
-  </a>
+  <div class="dental-navbar" id="dental-navbar">
 
-  <ul class="nav-links">
-    <li><a href="{% url 'contactform:contact' %}" class="nav-link">Contact</a></li>
-    <!---
-    <li><a href="{% url 'paymentGatewaySystem:dashboard-ui' %}" class="nav-link">Payments</a></li>
-    --->
-    {% if user.is_authenticated %}
-    <li>
-      <a href="{% url 'login:dashboard' %}" class="nav-link">
+    <!-- Left Section: Tooth Logo inside dark blue pebble -->
+    <a href="{% if user.is_authenticated %}{% url 'login:dashboard' %}{% else %}{% url 'login:login' %}{% endif %}"
+      class="dental-logo-box" aria-label="{{ brand_name|default:'Base Features' }}">
+      <div class="dental-logo-bg">
+        {% if navbar_settings.logo_image_file %}
+        <img src="{{ navbar_settings.logo_image_file.url }}" alt="{{ brand_name|default:'Logo' }}"
+          class="dental-logo-img" />
+        {% elif navbar_settings.logo_image_url %}
+        <img src="{{ navbar_settings.logo_image_url }}" alt="{{ brand_name|default:'Logo' }}" class="dental-logo-img" />
+        {% else %}
+        <svg class="tooth-logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M12 2C9.5 2 7 3.5 7 6.5C7 9.5 9 10 9 12C9 14.5 7.5 15.5 7.5 18C7.5 20.5 9.5 22 12 22C14.5 22 16.5 20.5 16.5 18C16.5 14.5 15 14.5 15 12C15 10 17 9.5 17 6.5C17 3.5 14.5 2 12 2Z" />
+          <path d="M9 12C10.5 12 12 11.5 12 10.5C12 11.5 13.5 12 15 12" />
+        </svg>
+        {% endif %}
+      </div>
+      <span style="display: none;">{{ brand_name|default:"Base Features" }}</span>
+    </a>
+
+    <!-- Center Section: Navigation Links -->
+    <div class="dental-nav-links">
+      <!-- DASHBOARD -->
+      <a href="{% url 'login:dashboard' %}"
+        class="dental-nav-item {% if request.resolver_match.view_name == 'login:dashboard' or request.path == '/' %}active{% endif %}">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="9"></rect>
+          <rect x="14" y="3" width="7" height="5"></rect>
+          <rect x="14" y="12" width="7" height="9"></rect>
+          <rect x="3" y="16" width="7" height="5"></rect>
+        </svg>
+        <span class="nav-label">DASHBOARD</span>
+      </a>
+
+      <!-- PAYMENTS -->
+      <a href="{% url 'paymentGatewaySystem:dashboard-ui' %}"
+        class="dental-nav-item {% if 'payments' in request.path %}active{% endif %}">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+          <line x1="1" y1="10" x2="23" y2="10"></line>
+        </svg>
+        <span class="nav-label">PAYMENTS</span>
+      </a>
+
+      <!-- SERVICES -->
+      <a href="#" class="dental-nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+        <span class="nav-label">SERVICES</span>
+      </a>
+
+      <!-- ABOUT US -->
+      <a href="#" class="dental-nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span class="nav-label">ABOUT US</span>
+      </a>
+
+      <!-- CONTACT -->
+      <a href="{% url 'contactform:contact' %}"
+        class="dental-nav-item {% if 'contact' in request.path %}active{% endif %}">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+        </svg>
+        <span class="nav-label">CONTACT</span>
+      </a>
+    </div>
+
+    <!-- Right Section: Blue dividing line and 3x3 dots grid icon -->
+    <div id="dental-right-trigger" class="dental-right-section" onclick="toggleUserDropdown(event)" role="button" aria-label="Toggle user panel"
+      aria-haspopup="true">
+      <div class="dental-grid-btn">
+        <svg class="grid-icon" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="4" cy="4" r="2" />
+          <circle cx="12" cy="4" r="2" />
+          <circle cx="20" cy="4" r="2" />
+          <circle cx="4" cy="12" r="2" />
+          <circle cx="12" cy="12" r="2" />
+          <circle cx="20" cy="12" r="2" />
+          <circle cx="4" cy="20" r="2" />
+          <circle cx="12" cy="20" r="2" />
+          <circle cx="20" cy="20" r="2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- User Action Dropdown Menu -->
+    <div class="user-dropdown-menu" id="user-dropdown-menu">
+      {% if user.is_authenticated %}
+      <div class="user-info-header">
         <span class="user-avatar-small">
           {% if user.avatar_url %}
           <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="avatar-img" />
@@ -26,54 +116,83 @@
           {{ user.get_initials }}
           {% endif %}
         </span>
-        Dashboard
-      </a>
-    </li>
-    <li>
-      <form action="{% url 'login:logout' %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" class="nav-link btn-link-logout">Logout</button>
-      </form>
-    </li>
-    {% else %}
-    <li><a href="{% url 'login:login' %}" class="nav-link">Sign In</a></li>
-    <li><a href="{% url 'login:signup' %}" class="nav-link nav-link-highlight">Sign Up</a></li>
-    {% endif %}
+        <div class="user-details">
+          <span class="username">{{ user.username }}</span>
+          <span class="user-email">{{ user.email|default:"" }}</span>
+        </div>
+      </div>
+      <div class="dropdown-divider"></div>
+      {% endif %}
 
-    <!-- Dark / Light Theme Toggle Button -->
-    <li>
-      <button id="theme-toggle-btn" class="nav-link theme-toggle-btn" aria-label="Toggle dark/light theme"
-        title="Toggle dark/light theme" onclick="toggleTheme()">
-        <span id="theme-icon">🌙</span>
+      <a href="#" class="dropdown-item">Smile Gallery</a>
+      <a href="#" class="dropdown-item">Reviews</a>
+
+      <div class="dropdown-divider"></div>
+      {% if user.is_authenticated %}
+      <form action="{% url 'login:logout' %}" method="post" class="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="dropdown-item btn-logout">Logout</button>
+      </form>
+      {% else %}
+      <a href="{% url 'login:login' %}" class="dropdown-item">Sign In</a>
+      <a href="{% url 'login:signup' %}" class="dropdown-item highlight">Sign Up</a>
+      {% endif %}
+
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item btn-theme-toggle" onclick="toggleTheme(); event.stopPropagation();">
+        Toggle Theme <span id="theme-icon-dropdown">🌙</span>
       </button>
-    </li>
-  </ul>
-</nav>
+    </div>
+
+  </div>
+</div>
 
 <script>
   (function () {
-    /* Restore persisted theme preference immediately on load (no FOUC) */
+    /* Restore persisted theme preference immediately on load */
     const saved = localStorage.getItem('bf-theme');
     if (saved === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
-      const icon = document.getElementById('theme-icon');
-      if (icon) icon.textContent = '☀️';
+      window.addEventListener('DOMContentLoaded', () => {
+        const dropdownIcon = document.getElementById('theme-icon-dropdown');
+        if (dropdownIcon) dropdownIcon.textContent = '☀️';
+      });
     }
   })();
 
   function toggleTheme() {
     const html = document.documentElement;
-    const icon = document.getElementById('theme-icon');
     const isDark = html.getAttribute('data-theme') === 'dark';
+    const nextTheme = isDark ? 'light' : 'dark';
+    const nextIcon = isDark ? '🌙' : '☀️';
 
     if (isDark) {
       html.removeAttribute('data-theme');
-      localStorage.setItem('bf-theme', 'light');
-      if (icon) icon.textContent = '🌙';
     } else {
       html.setAttribute('data-theme', 'dark');
-      localStorage.setItem('bf-theme', 'dark');
-      if (icon) icon.textContent = '☀️';
+    }
+    localStorage.setItem('bf-theme', nextTheme);
+
+    const dropdownIcon = document.getElementById('theme-icon-dropdown');
+    if (dropdownIcon) dropdownIcon.textContent = nextIcon;
+  }
+
+  function toggleUserDropdown(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById('user-dropdown-menu');
+    if (dropdown) {
+      dropdown.classList.toggle('show');
     }
   }
+
+  // Close dropdown if clicking outside
+  document.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('user-dropdown-menu');
+    const trigger = document.getElementById('dental-right-trigger');
+    if (dropdown && dropdown.classList.contains('show')) {
+      if (!dropdown.contains(event.target) && !trigger.contains(event.target)) {
+        dropdown.classList.remove('show');
+      }
+    }
+  });
 </script>
