@@ -34,6 +34,15 @@ def render_footer(context, tagline="Modular & Secure Django Components Library")
     """
     Renders the unified footer section.
     """
+    from navfooter.models import SocialMediaLink
+    social_links = []
+    try:
+        social_links = list(SocialMediaLink.objects.filter(is_active=True))
+    except Exception:
+        # Fallback to empty list if DB migrations are not yet run
+        pass
+
     return {
         'tagline': tagline,
+        'social_links': social_links,
     }
